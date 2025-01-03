@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "269f5ca2-a817-43c9-af98-5374d213db43",
+		"name": "face-it",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23953354"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"ddd\",\r\n    \"password\": \"ddd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8989/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set('ajwt', pm.cookies.get('ajwt'))"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"ddd\",\n    \"password\": \"ddd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8989/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createTask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGQiLCJleHAiOjE3MzU5MTk1MDIsImlhdCI6MTczNTkxODkwMiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIifQ.HqLqm8exliRXPR0TRKiRToiFBxYTcZ7rjGbTcpszh88",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "task",
+							"value": "{\n  \"title\": \"My Task\",\n  \"description\": \"Description of the task\",\n  \"dueDate\": \"2025-01-05T12:00:00\",\n  \"status\": \"PENDING\",\n  \"userId\": 1\n}\n",
+							"contentType": "application/json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8989/tasks/createTask",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"tasks",
+						"createTask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGQiLCJleHAiOjE3MzU5MTQ0NzcsImlhdCI6MTczNTkxMzg3NywiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIifQ.mPl782WUaZc5p2y5c-7Mfth_pl58hscqLWGI0NzwWXc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8989/tasks/get?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"tasks",
+						"get"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateTask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGQiLCJleHAiOjE3MzU5MTQ0NzcsImlhdCI6MTczNTkxMzg3NywiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIifQ.mPl782WUaZc5p2y5c-7Mfth_pl58hscqLWGI0NzwWXc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"My Task\",\r\n    \"description\": \"Description\",\r\n    \"dueDate\": \"2025-01-05T12:00:00\",\r\n    \"status\": \"PENDING\",\r\n    \"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8989/tasks/update/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"tasks",
+						"update",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteTask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZGQiLCJleHAiOjE3MzU5MTQ0NzcsImlhdCI6MTczNTkxMzg3NywiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIifQ.mPl782WUaZc5p2y5c-7Mfth_pl58hscqLWGI0NzwWXc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8989/tasks/delete/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"tasks",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+jwt:
+  secret: secret_key
+  expiration: 600000
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update

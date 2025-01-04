@@ -7,7 +7,7 @@ services:
     ports:
       - "8989:8989"
     environment:
-      SPRING_PROFILES_ACTIVE: "dev"
+      SPRING_PROFILES_ACTIVE: "docker"
     depends_on:
       - user-service
       - task-service
@@ -20,7 +20,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SPRING_PROFILES_ACTIVE: "dev"
+      SPRING_PROFILES_ACTIVE: "docker"
 
   task-service:
     container_name: task-service
@@ -30,4 +30,4 @@ services:
     ports:
       - "8082:8082"
     environment:
-      SPRING_PROFILES_ACTIVE: "dev"
+      SPRING_PROFILES_ACTIVE: "docker"

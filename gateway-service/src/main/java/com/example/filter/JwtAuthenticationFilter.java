@@ -1,6 +1,7 @@
 package com.example.filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -18,6 +19,9 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${baseUrl.user-service}")
+    private String userServiceUrl;
 
     private final List<String> openApi = List.of(
             "/users/register",
@@ -37,7 +41,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                 if (nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
                     try {
                         var jwt = authHeader.substring(7);
-                        this.restTemplate.getForObject("http://localhost:8081/users/validateToken?token=" + jwt, Object.class);
+                        this.restTemplate.getForObject(this.userServiceUrl + "/users/validateToken?token=" + jwt, Object.class);
                     } catch (Exception e) {
                         exchange.getResponse().setStatusCode(UNAUTHORIZED);
                         return exchange.getResponse().setComplete();

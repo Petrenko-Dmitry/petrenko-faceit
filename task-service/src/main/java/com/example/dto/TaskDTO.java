@@ -4,9 +4,11 @@ import com.example.entity.Task;
 import com.example.entity.TaskStatus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.dto.AttachedFileDTO.convertToDTO;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 public record TaskDTO(
         Long id,
@@ -26,7 +28,7 @@ public record TaskDTO(
                 task.getDueDate(),
                 task.getStatus(),
                 task.getUserId(),
-                convertToDTO(task.getAttachedFiles())
+                isEmpty(task.getAttachedFiles()) ? new ArrayList<>() : convertToDTO(task.getAttachedFiles())
         );
     }
 }

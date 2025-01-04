@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Map;
 
 import static java.util.Objects.nonNull;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -38,7 +37,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                 if (nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
                     try {
                         var jwt = authHeader.substring(7);
-                        this.restTemplate.getForObject("http://localhost:8081/users/validateToken?token=" + jwt, Map.class);
+                        this.restTemplate.getForObject("http://localhost:8081/users/validateToken?token=" + jwt, Object.class);
                     } catch (Exception e) {
                         exchange.getResponse().setStatusCode(UNAUTHORIZED);
                         return exchange.getResponse().setComplete();

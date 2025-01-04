@@ -1,11 +1,10 @@
 package com.example.service;
 
 import com.example.dto.AuthRequest;
-
-import java.util.Map;
+import com.example.dto.UserAuthority;
 
 public interface UserService {
     void register(AuthRequest user);
     String login(AuthRequest user);
-    Map<String, String> validateToken(String token);
+    UserAuthority validateToken(String token);
 }

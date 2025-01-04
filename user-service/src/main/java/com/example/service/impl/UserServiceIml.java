@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.dto.AuthRequest;
+import com.example.dto.UserAuthority;
 import com.example.entity.TaskUser;
 import com.example.repository.UserRepository;
 import com.example.security.JWTUtil;
@@ -15,9 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static java.util.Objects.isNull;
 
@@ -58,15 +56,14 @@ public class UserServiceIml implements UserService {
         } catch (BadCredentialsException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The name or password is incorrect.", e);
         }
-        var jwt = this.jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
-        return jwt;
+        return this.jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
     }
 
     @Override
-    public Map<String, String> validateToken(String token) {
-        var response = new HashMap<String, String>();
-        response.put("user", this.jwtTokenUtil.extractUsername(token));
-        response.put("roles", this.jwtTokenUtil.extractAuthorities(token));
-        return response;
+    public UserAuthority validateToken(String token) {
+        return new UserAuthority(
+                this.jwtTokenUtil.extractUsername(token),
+                this.jwtTokenUtil.extractAuthorities(token)
+        );
     }
 }
